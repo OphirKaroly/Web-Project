@@ -1,0 +1,36 @@
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\appsettings.json
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\My Website.staticwebassets.runtime.json
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\My Website.staticwebassets.endpoints.json
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\My Website.exe
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\My Website.deps.json
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\My Website.runtimeconfig.json
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\My Website.dll
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\My Website.pdb
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.AssemblyInfo.cs
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.csproj.CoreCompileInputs.cache
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\scopedcss\bundle\My Website.styles.css
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\swae.build.ex.cache
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.dll
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\refint\My Website.dll
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.pdb
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.genruntimeconfig.cache
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\ref\My Website.dll
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\wwwroot\script.js
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.csproj.AssemblyReference.cache
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.csproj.Up2Date

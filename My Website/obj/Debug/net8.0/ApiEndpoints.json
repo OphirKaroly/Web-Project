@@ -1,0 +1,36 @@
+[
+  {
+    "ContainingType": "My_Website.Deck",
+    "Method": "Restart",
+    "RelativePath": "api/restart",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "My_Website.Deck",
+    "Method": "DrawTop",
+    "RelativePath": "api/top",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "My_Website.Card",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]
