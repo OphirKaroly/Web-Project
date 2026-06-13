@@ -68,11 +68,11 @@ namespace My_Website
 
                 string[] arr = new string[] { "C", "S", "H", "D"};
 
-                for (int i = 0; i < 4; i++)
+                for (int i = 1; i <= 13; i++)
                 {
-                    for (int j = 1; j<=13; j++)
+                    for (int j = 0; j<4; j++)
                     {
-                        deck.Insert(new Card(arr[i], j));
+                        deck.Insert(new Card(arr[j], i));
                     }
                 }
         }
