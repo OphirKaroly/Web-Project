@@ -1,5 +1,31 @@
-th, td {border-style: outset; font-size:30px}
-body { background-color:darkgreen;}
-h1 {color:red; text-align:center; font-size: 1000%;}
-div {text-align:center;}
-img {width: 1000px; height:600px; float:right;}
+th, td {
+    border-style: outset;
+    font-size: 30px
+}
+
+body {
+    background-color: darkgreen;
+}
+
+h1 {
+    color: red;
+    text-align: center;
+    font-size: 1000%;
+}
+
+div {
+    text-align: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.other {
+    width: 1000px;
+    height: 600px;
+    float: right;
+}
+
+.card {
+    width: 71px;
+    height: 95px;
+}
