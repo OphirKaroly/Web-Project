@@ -34,3 +34,4 @@ C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\Microsoft.Enti
 C:\Users\User\source\repos\My Website\My Website\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll
 C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.csproj.AssemblyReference.cache
 C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.csproj.Up2Date
+C:\Users\User\source\repos\My Website\My Website\obj\Debug\net8.0\My Website.sourcelink.json
