@@ -7,6 +7,8 @@ let y = 1; // Image Index
 
 let Hidden;
 const Decks = [];
+let msg = 2; //msg id 
+let Flag;
 
 let audio = document.createElement("audio");
 let Re4 = "Hit.mp3";
@@ -60,7 +62,7 @@ class Card {
     #value;
     #house;
     constructor(value, house, rep) {
-        this.#value = Value(value);
+        this.#value = value;
         this.#house = house;
         this.rep = rep;
     }
@@ -74,7 +76,7 @@ class Card {
     }
 
     IsAce() {
-        return (this.#value == 11);
+        return (this.#value == 1);
     }
 }
 class Deck {
@@ -88,9 +90,10 @@ class Deck {
         this.#ace = 0;
     }
 
-    Add(c) { 
+    Add(c) {
+
         this.#arr.push(c);
-        this.#sum += c.GetValue();
+        this.#sum += Value(c.GetValue());
 
         if (c.IsAce()) {
             this.#ace++;
@@ -103,6 +106,12 @@ class Deck {
             this.#sum -= 10;
             this.#ace--;
         }
+    }
+
+    Remove() {
+        let pop = this.#arr.pop();
+        this.#sum -= pop.GetValue();
+        return pop;
     }
 
     GetSum() {
@@ -122,13 +131,74 @@ class Deck {
     }
 }
 
-async function HitNRun() {
-    if (await Hit(Decks[1])) {
-        Stand(Decks[1]);
+async function Run() {
+
+    console.log("Run!");
+
+    let deck;
+    let id;
+
+    for (let i = 1; i < Decks.length; i++) {
+
+
+        deck = Decks[i];
+        id = "msg" + i;
+
+        if (i != 1) {
+            document.getElementById("msg" + (i - 1)).innerText = "";
+        }
+
+        if (Decks.length > 2) {
+            document.getElementById(id).innerText = "^";
+        }
+
+        console.log(deck);
+
+        document.getElementById("Button1").onclick = () => HitNRun(deck, id);
+        document.getElementById("Button2").onclick = () => Flag();
+
+        if (deck.GetSize() == 2 && (deck.GetCard(0).GetValue() == deck.GetCard(1).GetValue())) {
+            let element = document.createElement("button");
+            element.id = "Button3";
+            element.onclick = () => Split(deck);
+            element.innerHTML = "<h2> Split </h2>";
+            document.getElementById("Button1").insertAdjacentElement('afterend', element);
+        }
+
+        await new Promise(resolve => Flag = resolve);
+        console.log("Flag!");
+
+        if (document.getElementById("Button3") != null) {
+            document.getElementById("Button3").remove();
+        }
     }
+
+    await Stand(Decks[1]);
+
+    for (let i = 2; i < Decks.length; i++) {
+        await Result(Decks[i], "msg" + i);
+    }
+
+
 }
 
-async function Hit(Deck) {
+async function HitNRun(deck, id) {
+
+
+
+    if (await Hit(deck)) {
+
+        if (deck.GetSum() > 21) {
+            document.getElementById(id).innerText = "LOSE!";
+        }
+
+        console.log("end");
+        Flag();
+    }
+
+}
+
+async function Hit(deck) {
 
     audio.play();
 
@@ -145,103 +215,37 @@ async function Hit(Deck) {
     img.width = "71";
     img.height = "95";
 
-    Deck.GetLastCard().rep.insertAdjacentElement('afterend', img);
-    Deck.Add(new Card(data.cardValue, data.house, img));
+    console.log("before - ");
+    console.log(deck);
 
-    console.log(Deck.GetSum());
+    deck.GetLastCard().rep.insertAdjacentElement('afterend', img);
+    deck.Add(new Card(data.cardValue, data.house, img));
 
-    return (Deck.GetSum() >= 21);
+    console.log("after - ");
+    console.log(deck);
+
+    console.log(deck.GetSum());
+
+    return (deck.GetSum() >= 21);
 }
 
-async function Stand(Deck) {
+async function Stand(deck) {
 
+    console.log("Stand!");
     await new Promise(resolve => setTimeout(resolve, 500));
+
+    document.getElementById("c1").setAttribute("src", Hidden);
+    document.getElementById("Button2").remove();
+    document.getElementById("Button1").setAttribute("onclick", "Restart()");
+    document.getElementById("Button1").innerHTML = "<h2> Restart </h2>";
 
     if (document.getElementById("Button3") != null) {
         document.getElementById("Button3").remove();
     }
 
-    console.log("Stand!");
-    let result; //result of the game - win draw or loss
+    audio.play();
 
-    document.getElementById("c1").setAttribute("src", Hidden);
-    audio.play(); 
-
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    document.getElementById("Button2").remove();
-
-    document.getElementById("Button1").setAttribute("onclick", "Restart()");
-    document.getElementById("Button1").innerHTML = "<h2> Restart </h2>";
-
-    if (Deck.GetSum() > 21) {
-        result = 0;
-        console.log("Bust! - 1");
-    }
-
-    else {
-        if (Decks[0].GetSum() == 21) {
-            if (Deck.GetSum() == 21) {
-                result = 0.5;
-            }
-
-            else {
-                result = 0;
-            }
-        }
-
-        else {
-
-            //document.getElementById("Button1").setAttribute("onclick", "Next()");
-            //document.getElementById("Button1").innerHTML = "<h2> &nbsp; Next &nbsp;</h2>";
-
-            while (Decks[0].GetSum() < 17 && !(await Hit(Decks[0]))) {
-                await new Promise(resolve => setTimeout(resolve, 1000));
-            }
-
-            if (Decks[0].GetSum() > 21) {
-                result = 1;
-                console.log("Bust! - 2");
-            }
-
-
-
-            else {
-                if (Decks[0].GetSum() > Deck.GetSum()) {
-                    result = 0;
-                }
-            }
-
-            if (Decks[0].GetSum() < Deck.GetSum()) {
-                result = 1;
-            }
-
-            if (Decks[0].GetSum() == Deck.GetSum()) {
-                result = 0.5;
-            }
-        }
-
-
-    }
-
-
-    if (result == 0.5) {
-        document.getElementById("msg").innerText = "DRAW!";
-    }
-
-    else {
-        if (result == 1) {
-            document.getElementById("msg").innerText = "YOU WIN!";
-        }
-
-        else {
-            document.getElementById("msg").innerText = "YOU LOSE!";
-        }
-
-        console.log(Deck.GetSum());
-        console.log(Decks[0].GetSum());
-    }
-
+    Result(deck, "msg1");
 }
 
 async function Restart() {
@@ -262,12 +266,16 @@ async function Restart() {
 
     Decks.length = 0;
 
-    document.getElementById("msg").innerHTML = "<br>";
+    document.getElementById("msg1").innerHTML = "<br>";
+    msg = 2;
 
     Start();
 }
 
 async function Start() {
+
+    await fetch('/api/setman');
+    console.log("SetMan");
 
     Decks.push(new Deck());
     Decks.push(new Deck());
@@ -295,69 +303,55 @@ async function Start() {
         }
     }
 
-    document.getElementById("Button1").setAttribute("onclick", "HitNRun()");
+    let id = "msg1";
+
+    document.getElementById("Button1").onclick = () => HitNRun(Decks[1], id);
     document.getElementById("Button1").innerHTML = "<h2>&nbsp;&nbsp;Hit &nbsp;&nbsp;</h2>";
 
     let element = document.createElement("button");
 
-    element.setAttribute("onclick", "Stand(Decks[1])");
+    element.onclick = () => Stand(Decks[1]);
     element.id = "Button2";
     element.innerHTML = "<h2> Stand </h2>";
 
     document.getElementById("Button1").insertAdjacentElement('afterend', element);
 
     if (Decks[0].GetSum() == 21) {
-        Stand();
+        Stand(Decks[1], true);
     }
 
     else {
-        if (Decks[1].GetSum() == 21) { // forgive me
-            document.getElementById("msg").innerText = "YOU WIN!";
-            document.getElementById("c1").setAttribute("src", Hidden);
-            document.getElementById("Button2").remove();
-            document.getElementById("Button1").setAttribute("onclick", "Restart()"); 
-            document.getElementById("Button1").innerHTML = "<h2> Restart </h2>";
-
+        if (Decks[1].GetSum() == 21) {
+            Stand(Decks[1], true);
         }
-    }
 
-    if (Decks[1].GetCard(0).GetValue() == Decks[1].GetCard(1).GetValue()) {
-
-        element = document.createElement("button");
-        element.id = "Button3";
-        element.onclick = Split;
-        element.innerHTML = "<h2> Split </h2>";
-
-        document.getElementById("Button1").insertAdjacentElement('afterend', element);
+        else {
+            Run();
+        }
     }
 }
 
-async function Split(Deck) {
+async function Split(deck) {
 
     audio.play();
 
     Decks.push(new Deck());
-    let split = false;
 
     let p1 = document.createElement("img");
 
     p1.width = "71";
     p1.height = "95";
-    p1.src = Deck[1].rep.src;
+    p1.src = deck.GetCard(1).rep.src;
 
-    Decks[Decks.Length - 1].Add(new Card(Deck[1].GetValue(),Deck[1].GetHouse(), p1));
+    Decks[Decks.length - 1].Add(new Card(deck.GetCard(1).GetValue(), deck.GetCard(1).GetHouse(), p1));
 
     let res = await fetch('/api/top');
     let data = await res.json();
 
-    let c = Deck.pop();
-    c.rep.src = "/cards/" + data.cardValue + data.house + ".png";
+    let c = deck.Remove();
+    c.rep.src = "/cards/" + data.house + data.cardValue + ".png";
 
-    Deck.Add(new Card(data.cardValue, data.house, c.rep));
-
-    if (Deck[0].GetValue() == Deck[1].GetValue()) {
-        split = true;
-    }
+    deck.Add(new Card(data.cardValue, data.house, c.rep));
 
     res = await fetch('/api/top');
     data = await res.json();
@@ -368,21 +362,38 @@ async function Split(Deck) {
     p2.height = "95";
     p2.src = "/cards/" + data.house + data.cardValue + ".png";
 
-    Decks[Decks.Length - 1].Add(new Card(data.cardValue, data.house, p2))
+    Decks[Decks.length - 1].Add(new Card(data.cardValue, data.house, p2))
 
-    span = document.createElement("span");
+    let span = document.createElement("span");
     span.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 
     document.getElementById("split").appendChild(span);
-    document.getElementById("split").appendChild(p1);
-    document.getElementById("split").appendChild(p2);
 
-    if (!split) {
+    let div = document.createElement("div");
+    div.id = "d" + msg;
+    div.style.gap = "5px";
+
+    document.getElementById("split").appendChild(div);
+    div.appendChild(p1);
+    div.appendChild(p2);
+
+    let m = document.createElement("h3");
+    m.style.fontSize = "28px";
+    m.id = "msg" + msg;
+    m.className= "msg";
+    document.getElementById("msg" + (msg - 1)).innerText = "^";
+
+    msg++;
+
+    div.appendChild(m);
+
+    if (deck.GetCard(0).GetValue() != deck.GetCard(1).GetValue()) {
         document.getElementById("Button3").remove();
     }
+
 }
 
-function Value(k){
+function Value(k) {
 
     if (k > 10) {
         return 10;
@@ -397,7 +408,7 @@ function Value(k){
 }
 function SwitchSound() {
     if (audio.src == Re4) {
-        audio.src = Re3; 
+        audio.src = Re3;
     }
 
     else {
@@ -405,21 +416,101 @@ function SwitchSound() {
     }
 }
 
+async function Result(deck, id) {
+
+    let result;
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    if (deck.GetSum() > 21) {
+        result = 0;
+        console.log("Bust! - 1");
+    }
+
+    else {
+        if (Decks[0].GetSum() == 21) {
+            if (deck.GetSum() == 21) {
+                result = 0.5;
+            }
+
+            else {
+                result = 0;
+            }
+        }
+
+        else {
+
+            if (deck.GetSize() == 2 && deck.GetSum() == 21) {
+                result = 1;
+            }
+
+            else {
+                while (Decks[0].GetSum() < 17 && !(await Hit(Decks[0]))) {
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+
+                if (Decks[0].GetSum() > 21) {
+                    result = 1;
+                    console.log("Bust! - 2");
+                }
+
+
+
+                else {
+                    if (Decks[0].GetSum() > deck.GetSum()) {
+                        result = 0;
+                    }
+                }
+
+                if (Decks[0].GetSum() < deck.GetSum()) {
+                    result = 1;
+                }
+
+                if (Decks[0].GetSum() == deck.GetSum()) {
+                    result = 0.5;
+                }
+            }
+        }
+    }
+
+
+    if (result == 0.5) {
+        document.getElementById(id).innerText = "DRAW!";
+    }
+
+    else {
+        if (result == 1) {
+            document.getElementById(id).innerText = "WIN!";
+        }
+
+        else {
+            document.getElementById(id).innerText = "LOSE!";
+        }
+
+        console.log(deck.GetSum());
+        console.log(Decks[0].GetSum());
+    }
+}
+
 async function HardRestart() {
-    
+
 
     if (document.getElementById("Button3") == null) {
         document.getElementById("Button2").remove();
         await Restart();
     }
-    
+
 }
+
 
 
 
 // Slot Machine
 
 async function SlotMachine() {
+
+    await fetch('/api/setman');
+    console.log("SetMan");
 
     document.getElementById("slot1").src = "/Cards/Slot0.jpg";
     document.getElementById("slot2").src = "/Cards/Slot0.jpg";
@@ -457,7 +548,6 @@ async function SlotMachineHelper(k) {
         slot.src = "/Cards/Slot" + sym + ".jpg";
     }
 }
-
 function SymDeterminer() {
 
     let sym = Math.random();
@@ -492,5 +582,56 @@ function SymDeterminer() {
         default:
             return 0;
             break;
+    }
+}
+
+
+//Man
+
+async function Man() {
+
+    let res = await fetch('/api/getman');
+    let data = await res.json();
+
+    console.log("GetMan" - data.present);
+
+    console.log(data.dialogue[0]);
+
+    if (data.present) {
+        let element = document.createElement("img");
+        element.src = "/Images/Man2.png";
+        element.style.width = "600px";
+        element.style.height = "402px";
+        element.style.imageRendering = "pixelated";
+        element.style.position = "absolute";
+        element.style.top = "297px";
+        element.style.left = "775px";
+        document.getElementById("man").appendChild(element);
+
+        document.getElementById("title").innerText = "Man";
+
+        for (let i = 0; i < data.dialogue.length; i++) {
+
+            await TypeWriter("text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus a dui eros. Duis interdum erat vel eros tincidunt, quis eleifend arcu rhoncus. Sed feugiat consectetur sem, sit amet lobortis ipsum tincidunt ac. Vestibulum tristique mollis massa at viverra. Donec a suscipit lacus. Proin tristique elit sit amet turpis rhoncus lobortis. Aliquam erat volutpat.", 500);
+            await new Promise(resolve => setTimeout(resolve, 4000));
+        }
+    }
+}
+async function TypeWriter(id, text, speed) {
+
+    const element = document.getElementById(id);
+    element.innerHTML = "";
+
+    for (let i = 0; i < text.length; i++) {
+
+        await new Promise(resolve => setTimeout(resolve, speed));
+
+        if (text[i] == ' ') {
+            element.innerHTML += "&nbsp; &nbsp;";
+        }
+
+        else {
+            element.innerHTML += text[i];
+        }
     }
 }

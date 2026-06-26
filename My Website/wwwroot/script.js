@@ -62,7 +62,7 @@ class Card {
     #value;
     #house;
     constructor(value, house, rep) {
-        this.#value = Value(value);
+        this.#value = value;
         this.#house = house;
         this.rep = rep;
     }
@@ -76,7 +76,7 @@ class Card {
     }
 
     IsAce() {
-        return (this.#value == 11);
+        return (this.#value == 1);
     }
 }
 class Deck {
@@ -93,7 +93,7 @@ class Deck {
     Add(c) {
 
         this.#arr.push(c);
-        this.#sum += c.GetValue();
+        this.#sum += Value(c.GetValue());
 
         if (c.IsAce()) {
             this.#ace++;
@@ -106,6 +106,12 @@ class Deck {
             this.#sum -= 10;
             this.#ace--;
         }
+    }
+
+    Remove() {
+        let pop = this.#arr.pop();
+        this.#sum -= pop.GetValue();
+        return pop;
     }
 
     GetSum() {
@@ -134,25 +140,37 @@ async function Run() {
 
     for (let i = 1; i < Decks.length; i++) {
 
-        console.log(i);
-        console.log(Decks.length);
 
         deck = Decks[i];
         id = "msg" + i;
+
+        if (i != 1) {
+            document.getElementById("msg" + (i - 1)).innerText = "";
+        }
+
+        if (Decks.length > 2) {
+            document.getElementById(id).innerText = "^";
+        }
 
         console.log(deck);
 
         document.getElementById("Button1").onclick = () => HitNRun(deck, id);
         document.getElementById("Button2").onclick = () => Flag();
 
-        if (deck.GetSize() == 2 && (deck.GetCard(0) == deck.GetCard(1))) {
+        if (deck.GetSize() == 2 && (deck.GetCard(0).GetValue() == deck.GetCard(1).GetValue())) {
             let element = document.createElement("button");
             element.id = "Button3";
             element.onclick = () => Split(deck);
             element.innerHTML = "<h2> Split </h2>";
+            document.getElementById("Button1").insertAdjacentElement('afterend', element);
         }
 
         await new Promise(resolve => Flag = resolve);
+        console.log("Flag!");
+
+        if (document.getElementById("Button3") != null) {
+            document.getElementById("Button3").remove();
+        }
     }
 
     await Stand(Decks[1]);
@@ -174,7 +192,7 @@ async function HitNRun(deck, id) {
             document.getElementById(id).innerText = "LOSE!";
         }
 
-        await new Promise(resolve => setTimeout(500));
+        console.log("end");
         Flag();
     }
 
@@ -248,13 +266,16 @@ async function Restart() {
 
     Decks.length = 0;
 
-    document.getElementById("msg1").innerHTML = "<br> <br>";
+    document.getElementById("msg1").innerHTML = "<br>";
     msg = 2;
 
     Start();
 }
 
 async function Start() {
+
+    await fetch('/api/setman');
+    console.log("SetMan");
 
     Decks.push(new Deck());
     Decks.push(new Deck());
@@ -320,15 +341,15 @@ async function Split(deck) {
 
     p1.width = "71";
     p1.height = "95";
-    p1.src = deck[1].rep.src;
+    p1.src = deck.GetCard(1).rep.src;
 
-    Decks[Decks.length - 1].Add(new Card(deck[1].GetValue(), deck[1].GetHouse(), p1));
+    Decks[Decks.length - 1].Add(new Card(deck.GetCard(1).GetValue(), deck.GetCard(1).GetHouse(), p1));
 
     let res = await fetch('/api/top');
     let data = await res.json();
 
-    let c = deck.pop();
-    c.rep.src = "/cards/" + data.cardValue + data.house + ".png";
+    let c = deck.Remove();
+    c.rep.src = "/cards/" + data.house + data.cardValue + ".png";
 
     deck.Add(new Card(data.cardValue, data.house, c.rep));
 
@@ -350,19 +371,23 @@ async function Split(deck) {
 
     let div = document.createElement("div");
     div.id = "d" + msg;
+    div.style.gap = "5px";
 
     document.getElementById("split").appendChild(div);
     div.appendChild(p1);
     div.appendChild(p2);
 
-    let m = document.createElement("h4");
+    let m = document.createElement("h3");
+    m.style.fontSize = "28px";
     m.id = "msg" + msg;
+    m.className= "msg";
+    document.getElementById("msg" + (msg - 1)).innerText = "^";
 
     msg++;
 
     div.appendChild(m);
 
-    if (deck.GetCard(0) != deck.GetCard(1)) {
+    if (deck.GetCard(0).GetValue() != deck.GetCard(1).GetValue()) {
         document.getElementById("Button3").remove();
     }
 
@@ -484,6 +509,9 @@ async function HardRestart() {
 
 async function SlotMachine() {
 
+    await fetch('/api/setman');
+    console.log("SetMan");
+
     document.getElementById("slot1").src = "/Cards/Slot0.jpg";
     document.getElementById("slot2").src = "/Cards/Slot0.jpg";
     document.getElementById("slot3").src = "/Cards/Slot0.jpg";
@@ -520,7 +548,6 @@ async function SlotMachineHelper(k) {
         slot.src = "/Cards/Slot" + sym + ".jpg";
     }
 }
-
 function SymDeterminer() {
 
     let sym = Math.random();
@@ -555,5 +582,56 @@ function SymDeterminer() {
         default:
             return 0;
             break;
+    }
+}
+
+
+//Man
+
+async function Man() {
+
+    let res = await fetch('/api/getman');
+    let data = await res.json();
+
+    console.log("GetMan" - data.present);
+
+    console.log(data.dialogue[0]);
+
+    if (data.present) {
+        let element = document.createElement("img");
+        element.src = "/Images/Man2.png";
+        element.style.width = "600px";
+        element.style.height = "402px";
+        element.style.imageRendering = "pixelated";
+        element.style.position = "absolute";
+        element.style.top = "297px";
+        element.style.left = "775px";
+        document.getElementById("man").appendChild(element);
+
+        document.getElementById("title").innerText = "Man";
+
+        for (let i = 0; i < data.dialogue.length; i++) {
+
+            await TypeWriter("text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus a dui eros. Duis interdum erat vel eros tincidunt, quis eleifend arcu rhoncus. Sed feugiat consectetur sem, sit amet lobortis ipsum tincidunt ac. Vestibulum tristique mollis massa at viverra. Donec a suscipit lacus. Proin tristique elit sit amet turpis rhoncus lobortis. Aliquam erat volutpat.", 50);
+            await new Promise(resolve => setTimeout(resolve, 4000));
+        }
+    }
+}
+async function TypeWriter(id, text, speed) {
+
+    const element = document.getElementById(id);
+    element.innerHTML = "";
+
+    for (let i = 0; i < text.length; i++) {
+
+        await new Promise(resolve => setTimeout(resolve, speed));
+
+        if (text[i] == ' ') {
+            element.innerHTML += "&nbsp; &nbsp;";
+        }
+
+        else {
+            element.innerHTML += text[i];
+        }
     }
 }

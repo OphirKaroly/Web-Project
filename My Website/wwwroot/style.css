@@ -1,10 +1,21 @@
+
+@font-face {
+    font-family: 'Pixelta';
+    src: url('fonts/Pixelta.ttf');
+}
+
 th, td {
     border-style: outset;
     font-size: 30px
 }
 
 body {
+    font-family: 'Pixelta', sans-serif;
+}
+
+.casino {
     background-color: darkgreen;
+    font-family: 'Pixelta', sans-serif;
 }
 
 h1 {
@@ -13,10 +24,14 @@ h1 {
     font-size: 1000%;
 }
 
+.msg {
+    letter-spacing:5px;
+}
+
 div {
     text-align: center;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
 }
 
 .other {

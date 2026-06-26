@@ -1,8 +1,42 @@
 [
   {
+    "ContainingType": "My_Website.Man",
+    "Method": "GetMan",
+    "RelativePath": "api/getman",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "My_Website.Man",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "My_Website.Deck",
     "Method": "Restart",
     "RelativePath": "api/restart",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "My_Website.Man",
+    "Method": "SetMan",
+    "RelativePath": "api/setman",
     "HttpMethod": "GET",
     "IsController": false,
     "Order": 0,

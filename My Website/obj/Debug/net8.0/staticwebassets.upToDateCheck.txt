@@ -74,17 +74,28 @@ wwwroot\Cards\Slot6.jpg
 wwwroot\Cards\Transition5-6.jpg
 wwwroot\Cards\Transition6-5.jpg
 wwwroot\desktop.ini
+wwwroot\Fonts\Pixelta.ttf
 wwwroot\Hit.mp3
 wwwroot\Hit2.mp3
 wwwroot\Images\Billy1.jpeg
 wwwroot\Images\Billy2.jpeg
 wwwroot\Images\Billy3.jpeg
 wwwroot\Images\Billy4.jpeg
+wwwroot\Images\black dude.png
+wwwroot\Images\Casino Man red.jpg
+wwwroot\Images\Casino Man.jpg
+wwwroot\Images\Casino Man2.jpg
+wwwroot\Images\Casino Man2.png
+wwwroot\Images\Dark Alley.jpg
+wwwroot\Images\Inspector.jpg
+wwwroot\Images\Man.png
+wwwroot\Images\Man2.png
 wwwroot\Images\Slot5.jpg
 wwwroot\Images\Slots.webp
 wwwroot\index.html
+wwwroot\requirements.md
 wwwroot\SlotMachine.html
 wwwroot\style.css
 wwwroot\table.html
-wwwroot\requirements.md
+wwwroot\man.html
 wwwroot\script.js

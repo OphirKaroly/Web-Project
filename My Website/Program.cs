@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+
 namespace My_Website
 {
     public class Card
@@ -245,10 +247,38 @@ namespace My_Website
             return "QueueHead[" + temp.Substring(0, temp.Length - 1) + "]";
         }
     }
+    public class Man
+    {
+        public bool present { get; set; }
+        public string[] dialogue { get; set; }
+        public Man()
+        {
+            present = false;
+            dialogue = new string[2];
+        }
+
+        public void SetMan()
+        {
+            present = true;
+            dialogue[0] = "I See You've Gotten Your Hands Dirty With Gambling..";
+            dialogue[1] = "Very Well..";
+        }
+
+        public Man GetMan()
+        {
+            return this;
+        }
+    }
+
     public class Program
     {
+
+
         public static void Main(string[] args)
         {
+
+            Man man = new Man();
+
             Deck d = new Deck();
             d.Shuffle();
 
@@ -260,6 +290,8 @@ namespace My_Website
 
             app.MapGet("/api/top", d.DrawTop);
             app.MapGet("/api/restart", d.Restart);
+            app.MapGet("/api/setman", man.SetMan);
+            app.MapGet("/api/getman", man.GetMan);
 
             app.Run();
 
