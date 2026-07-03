@@ -18,7 +18,7 @@ body {
     font-family: 'Pixelta', sans-serif;
 }
 
-h1 {
+.counter {
     color: red;
     text-align: center;
     font-size: 1000%;
@@ -41,6 +41,23 @@ div {
 }
 
 .card {
-    width: 71px;
-    height: 95px;
+    width: 80px;
+    height: 107px;
+}
+
+.man {
+    position: absolute;
+    top: 297px;
+    left:775px;
+    width:600px;
+    height:402px;
+    image-rendering:pixelated;
+    visibility:hidden;
+}
+
+input {
+    width: 70px;
+    height:55px;
+    font-size:larger;
+    margin:0;
 }

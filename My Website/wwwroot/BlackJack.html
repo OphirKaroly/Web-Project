@@ -3,11 +3,15 @@
 <head>
     <title> Black-Jack </title>
     <link rel=" stylesheet" href="style.css">
+    <link rel="preload" as="fetch" href="/api/balance" crossorigin>
 </head>
 
 <body class="casino">
 
-    <br>
+    <div style="display: flex; gap: 10px; align-items:center; position: absolute; top: 0; right: 20px;">
+        <h1 id="balance" style="font-size:50px;"></h1>
+        <img src="Cards/realchip.png" style="height:60px; width:60px;">
+    </div>
 
     <div>
 
@@ -24,20 +28,42 @@
              <div>
                     <img class="card" src="" id="c3">
                     <img class="card" src="" id="c4">
-                    <h3 id="msg1" style="font-size:28px" class="msg"> <br> </h3>
             </div>
 
              <div style=" display: flex; align-items: flex-start;" id="split"></div>
         </div>
-
-
-        <span id="split"></span>
     </div>
 
-    <br> <br> <br>
-    <button onclick="HardRestart()">Switch Sound</button>
-    <a href="index.html"><h2><span style="background-color:gainsboro;"> Home Page </span></h2> </a>
+    <div id="betting" style="position:absolute; bottom:520px; left: 125px; height: 143px; width:440px;">
+        <div style="display:flex; align-items:center; gap:10px;">
+            <h1 id="bet" style="font-size:60px; margin:0;"> 25 </h1>
+            <img src="Cards/realchip.png" style="width:55px; height:55px;">
+        </div>
+
+        <h3 style="font-size:40px; margin:0;"> - - - - - - - - </h3>
+        <h3 id="msg" class="msg" style="font-size:60px;"></h3>
+
+        <div id="form">
+            <input type="number" id="betform">
+            <h3 class="msg" style="font-size:40px;"> <br>  Place Your Bet </h3>
+        </div>
+
+        <div id ="reference" style="display:flex; align-items:center; gap:10px;">
+            <h3 id="payout" style="font-size:60px; margin:0;"></h3>
+            <img id="chip" src="Cards/realchip.png" style="width:55px; height:55px; visibility:hidden">
+        </div>
+
+    </div>
+
+    <div style="position:absolute; bottom:2px; left:15px;">
+        <button onclick="SwitchSound()">Switch Sound</button>
+        <a href="index.html"><h2><span>&nbsp; Home Page &nbsp;</span></h2> </a>
+    </div>
 
     <script src="/script.js"></script>
+    <script> 
+        Balance();
+        Bet();
+    </script>
 </body>
 </html>

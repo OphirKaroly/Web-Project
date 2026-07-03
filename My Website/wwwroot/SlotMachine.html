@@ -3,9 +3,13 @@
 <head>
     <title> Slot Machine </title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preload" as="fetch" href="/api/balance" crossorigin>
 </head>
 
-<body class = "casino">
+<body class="casino">
+
+    <img src="Cards/realchip.png" style="position:absolute; top:20px; right:20px; height:71px; width:71px;">
+    <h1 id="balance" style="position:absolute; top:17px; right:110px;"></h1>
 
     <br><br><br><br><br><br><br><br><br>
 
@@ -13,7 +17,7 @@
 
         <img id="slot1" height="126" weight="126" src="/Cards/Slot0.jpg">
         <img id="slot2" height="126" weight="126" src="/Cards/Slot0.jpg">
-        <img id="slot3" height="126" weight="126" src="/Images/Casino Man.jpg">
+        <img id="slot3" height="126" weight="126" src="/Cards/Slot0.jpg">
 
         <br><br><br>
 
@@ -27,6 +31,7 @@
 
 
     <script src="/script.js"></script>
+    <script>Balance();</script>
 
 </body>
 

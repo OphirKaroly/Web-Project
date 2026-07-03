@@ -4,11 +4,14 @@
 
     <title> Clicker </title>
     <link rel="stylesheet" href="style.css">
-
+    <link rel="preload" as="fetch" href="/api/balance" crossorigin>
 </head>
 <body id="body">
 
-    <h1 id="var"> 0 </h1>
+    <img src="Cards/realchip.png" style="position:absolute; top:20px; right:20px; height:71px; width:71px;">
+    <h1 id="balance" style="position:absolute; top:17px; right:110px;"></h1>
+
+    <h1 id="var" class="counter"> 0 </h1>
     <div>
         <button type="button" onclick="Increment()" style="font-size:400%;"> + </button>
         <button type="button" onclick="Decrement()" style="font-size:400%;"> - </button>
@@ -20,6 +23,7 @@
     <button type="button" onclick="SwitchMode()" style="font-size:150%"> Switch Mode</button>
 
     <script src="script.js"></script>
+    <script> Balance();</script>
 </body>
 
 

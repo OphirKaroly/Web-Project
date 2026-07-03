@@ -15,6 +15,8 @@ wwwroot\Cards\C7.png
 wwwroot\Cards\C8.png
 wwwroot\Cards\C9.png
 wwwroot\Cards\Cards.png
+wwwroot\Cards\chip blue.png
+wwwroot\Cards\chip1-removebg-preview.png
 wwwroot\Cards\chip1.png
 wwwroot\Cards\chip2.jpg
 wwwroot\Cards\chip2.png
@@ -48,6 +50,7 @@ wwwroot\Cards\H6.png
 wwwroot\Cards\H7.png
 wwwroot\Cards\H8.png
 wwwroot\Cards\H9.png
+wwwroot\Cards\realchip.png
 wwwroot\Cards\S1.png
 wwwroot\Cards\S10.png
 wwwroot\Cards\S11.png
@@ -90,12 +93,17 @@ wwwroot\Images\Dark Alley.jpg
 wwwroot\Images\Inspector.jpg
 wwwroot\Images\Man.png
 wwwroot\Images\Man2.png
+wwwroot\Images\Man3.png
 wwwroot\Images\Slot5.jpg
 wwwroot\Images\Slots.webp
+wwwroot\Images\Stock Market V1.png
+wwwroot\Images\Stock Market V2.png
+wwwroot\Images\Stock Market V3.png
+wwwroot\Images\Stock Market V4.png
 wwwroot\index.html
-wwwroot\requirements.md
+wwwroot\man.html
+wwwroot\script.js
 wwwroot\SlotMachine.html
 wwwroot\style.css
 wwwroot\table.html
-wwwroot\man.html
-wwwroot\script.js
+wwwroot\requirements.md

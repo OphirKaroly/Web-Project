@@ -4,7 +4,7 @@
 
 A Multi-Page Luck Based Gaming Experience. 
 It's Audience Is Fans Of Luck Based Games Like Black-Jack / 21 And Slot Machines.
-The Site Lets Users Play Games And Gain (Or Lose) Luck-Points (Abbreviated As LP).
+The Site Lets Users Play Games And Gain (Or Lose) Poker Chips, The Website's Currency.
 
 ---
 

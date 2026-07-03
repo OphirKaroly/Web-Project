@@ -4,16 +4,16 @@ let body = document.getElementById("body");
 
 let y = 1; // Image Index
 
-
 let Hidden;
 const Decks = [];
-let msg = 2; //msg id 
 let Flag;
 
 let audio = document.createElement("audio");
 let Re4 = "Hit.mp3";
 let Re3 = "Hit2.mp3";
 audio.src = Re4;
+
+let bet = 25;
 
 
 // Index
@@ -136,25 +136,14 @@ async function Run() {
     console.log("Run!");
 
     let deck;
-    let id;
 
     for (let i = 1; i < Decks.length; i++) {
 
-
         deck = Decks[i];
-        id = "msg" + i;
-
-        if (i != 1) {
-            document.getElementById("msg" + (i - 1)).innerText = "";
-        }
-
-        if (Decks.length > 2) {
-            document.getElementById(id).innerText = "^";
-        }
 
         console.log(deck);
 
-        document.getElementById("Button1").onclick = () => HitNRun(deck, id);
+        document.getElementById("Button1").onclick = () => HitNRun(deck, "msg");
         document.getElementById("Button2").onclick = () => Flag();
 
         if (deck.GetSize() == 2 && (deck.GetCard(0).GetValue() == deck.GetCard(1).GetValue())) {
@@ -176,7 +165,7 @@ async function Run() {
     await Stand(Decks[1]);
 
     for (let i = 2; i < Decks.length; i++) {
-        await Result(Decks[i], "msg" + i);
+        await Result(Decks[i], "msg");
     }
 
 
@@ -212,8 +201,7 @@ async function Hit(deck) {
     let img = document.createElement("img");
 
     img.src = "/cards/" + data.house + data.cardValue + ".png";
-    img.width = "71";
-    img.height = "95";
+    img.className = "card";
 
     console.log("before - ");
     console.log(deck);
@@ -245,7 +233,9 @@ async function Stand(deck) {
 
     audio.play();
 
-    Result(deck, "msg1");
+    Result(deck, "msg");
+
+
 }
 
 async function Restart() {
@@ -264,15 +254,48 @@ async function Restart() {
         }
     }
 
+    for (let i = 1; i <= 4; i++) {
+        document.getElementById("c" + i).src = "";
+    }
+
     Decks.length = 0;
 
-    document.getElementById("msg1").innerHTML = "<br>";
-    msg = 2;
+    document.getElementById("msg").innerText = "";
+    document.getElementById("payout").innerText = "";
 
-    Start();
+    document.getElementById("Button1").innerHTML = "<h2>&nbsp;&nbsp;Start &nbsp;&nbsp</h2>";
+    document.getElementById("Button1").onclick = () => Start();
+
+    document.getElementById("bet").innerText = "25";
+    bet = 25;
+    document.getElementById("payout").innerHTML = "";
+    document.getElementById("chip").style.visibility = "hidden";
+
+    const div = document.createElement("div");
+    div.id = "form";
+
+    const form = document.createElement("input");
+    form.type = "number";
+    form.id = "betform";
+    div.appendChild(form);
+
+    const label = document.createElement("h3");
+    label.innerHTML = " <br> Place Your Bet";
+    label.className = "msg";
+    label.style.fontSize = "40px";
+    div.appendChild(label);
+
+    document.getElementById("betting").insertBefore(div, document.getElementById("reference"));
+
+    Bet();
 }
 
 async function Start() {
+
+    if (!(await DecrementBalance(bet))) 
+        return;
+
+    document.getElementById("form").remove();
 
     await fetch('/api/setman');
     console.log("SetMan");
@@ -339,8 +362,8 @@ async function Split(deck) {
 
     let p1 = document.createElement("img");
 
-    p1.width = "71";
-    p1.height = "95";
+    p1.width = "80";
+    p1.height = "107";
     p1.src = deck.GetCard(1).rep.src;
 
     Decks[Decks.length - 1].Add(new Card(deck.GetCard(1).GetValue(), deck.GetCard(1).GetHouse(), p1));
@@ -358,8 +381,8 @@ async function Split(deck) {
 
     p2 = document.createElement("img");
 
-    p2.width = "71";
-    p2.height = "95";
+    p2.width = "80";
+    p2.height = "107";
     p2.src = "/cards/" + data.house + data.cardValue + ".png";
 
     Decks[Decks.length - 1].Add(new Card(data.cardValue, data.house, p2))
@@ -370,29 +393,17 @@ async function Split(deck) {
     document.getElementById("split").appendChild(span);
 
     let div = document.createElement("div");
-    div.id = "d" + msg;
     div.style.gap = "5px";
 
     document.getElementById("split").appendChild(div);
     div.appendChild(p1);
     div.appendChild(p2);
 
-    let m = document.createElement("h3");
-    m.style.fontSize = "28px";
-    m.id = "msg" + msg;
-    m.className= "msg";
-    document.getElementById("msg" + (msg - 1)).innerText = "^";
-
-    msg++;
-
-    div.appendChild(m);
-
     if (deck.GetCard(0).GetValue() != deck.GetCard(1).GetValue()) {
         document.getElementById("Button3").remove();
     }
 
 }
-
 function Value(k) {
 
     if (k > 10) {
@@ -412,15 +423,14 @@ function SwitchSound() {
     }
 
     else {
-        audio.src = Re3;
+        audio.src = Re4;
     }
 }
 
 async function Result(deck, id) {
 
-    let result;
-
     await new Promise(resolve => setTimeout(resolve, 1000));
+    let result;
 
     if (deck.GetSum() > 21) {
         result = 0;
@@ -441,7 +451,7 @@ async function Result(deck, id) {
         else {
 
             if (deck.GetSize() == 2 && deck.GetSum() == 21) {
-                result = 1;
+                result = 2;
             }
 
             else {
@@ -479,7 +489,7 @@ async function Result(deck, id) {
     }
 
     else {
-        if (result == 1) {
+        if (result == 1 || result == 2) {
             document.getElementById(id).innerText = "WIN!";
         }
 
@@ -490,6 +500,8 @@ async function Result(deck, id) {
         console.log(deck.GetSum());
         console.log(Decks[0].GetSum());
     }
+
+    BetResult(result);
 }
 
 async function HardRestart() {
@@ -511,6 +523,10 @@ async function SlotMachine() {
 
     await fetch('/api/setman');
     console.log("SetMan");
+
+    if (!(await DecrementBalance(50))) {
+        return;
+    }
 
     document.getElementById("slot1").src = "/Cards/Slot0.jpg";
     document.getElementById("slot2").src = "/Cards/Slot0.jpg";
@@ -544,7 +560,6 @@ async function SlotMachineHelper(k) {
         }
 
         sym = currSym;
-        audio.play();
         slot.src = "/Cards/Slot" + sym + ".jpg";
     }
 }
@@ -593,30 +608,28 @@ async function Man() {
     let res = await fetch('/api/getman');
     let data = await res.json();
 
-    console.log("GetMan" - data.present);
-
-    console.log(data.dialogue[0]);
-
     if (data.present) {
-        let element = document.createElement("img");
-        element.src = "/Images/Man2.png";
-        element.style.width = "600px";
-        element.style.height = "402px";
-        element.style.imageRendering = "pixelated";
-        element.style.position = "absolute";
-        element.style.top = "297px";
-        element.style.left = "775px";
-        document.getElementById("man").appendChild(element);
 
+        document.getElementById("man").style.visibility = "visible";
         document.getElementById("title").innerText = "Man";
+      
+        for (let i = 1; i < data.dialogue.length; i++) {
 
-        for (let i = 0; i < data.dialogue.length; i++) {
+            await TypeWriter("text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus a dui eros. Duis interdum erat vel eros tincidunt, quis eleifend arcu rhoncus. Sed feugiat consectetur sem, sit amet lobortis ipsum tincidunt ac. Vestibulum tristique mollis massa at viverra.", 25);
+            let element = document.createElement("img");
+            element.style.position = "absolute";
+            element.style.top = "300px";
+            element.style.left = "200px";
+            element.style.height = "267px";
+            element.style.width = "400px";
+            element.src = "/Images/Stock Market V4.png";
+            document.getElementById("misc").appendChild(element);
 
-            await TypeWriter("text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus a dui eros. Duis interdum erat vel eros tincidunt, quis eleifend arcu rhoncus. Sed feugiat consectetur sem, sit amet lobortis ipsum tincidunt ac. Vestibulum tristique mollis massa at viverra. Donec a suscipit lacus. Proin tristique elit sit amet turpis rhoncus lobortis. Aliquam erat volutpat.", 50);
             await new Promise(resolve => setTimeout(resolve, 4000));
         }
     }
 }
+
 async function TypeWriter(id, text, speed) {
 
     const element = document.getElementById(id);
@@ -635,3 +648,89 @@ async function TypeWriter(id, text, speed) {
         }
     }
 }
+
+//Betting
+
+async function IncrementBalance(num) {
+
+    console.log("incBalance");
+
+    await fetch('/api/incrementbalance', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(num)
+    });
+
+    Balance();
+}
+
+async function DecrementBalance(num) {
+
+    console.log("decBalance");
+
+    const response = await fetch('/api/decrementbalance', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(num)
+    })
+
+    if (await response.json()) {
+        Balance();
+        return true;
+    }
+
+    return false;
+}
+
+async function Balance() {
+    let res = await fetch('/api/balance');
+    let data = await res.json();
+
+    console.log(data);
+
+    document.getElementById("balance").innerText = data;
+}
+function Bet() {
+
+    const form = document.getElementById("betform");
+
+    form.addEventListener("input", () => {
+        const num = form.valueAsNumber;
+        if (num >= 25) {
+            bet = num;
+            document.getElementById("bet").innerText = bet;
+        }
+    })
+}
+
+async function BetResult(result) {
+
+    if (result == 0) {
+        return;
+    }
+
+    let payout;
+
+    if (result == 0.5) {
+        payout = bet;
+    }
+
+    if (result == 1) {
+        payout = bet * 2;
+    }
+
+    if (result == 2) {
+         payout = Math.floor(bet / 2 * 3);
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    audio.play();
+    document.getElementById("payout").innerHTML = "+ " + payout;
+    document.getElementById("chip").style.visibility = "visible";
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    audio.play();
+    IncrementBalance(payout);
+}
+
+

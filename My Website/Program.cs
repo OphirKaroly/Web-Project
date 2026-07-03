@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 
 namespace My_Website
 {
@@ -278,6 +279,7 @@ namespace My_Website
         {
 
             Man man = new Man();
+            int balance = 1000;
 
             Deck d = new Deck();
             d.Shuffle();
@@ -292,6 +294,22 @@ namespace My_Website
             app.MapGet("/api/restart", d.Restart);
             app.MapGet("/api/setman", man.SetMan);
             app.MapGet("/api/getman", man.GetMan);
+            app.MapGet("/api/balance", () => balance);
+
+            app.MapPut("/api/incrementbalance", ([FromBody] int num) =>
+            {
+                balance += num;
+            });
+            app.MapPut("/api/decrementbalance", ([FromBody] int num) =>
+            {
+                if (num > balance)
+                {
+                    return false;
+                }
+
+                balance -= num;
+                return true;
+            });
 
             app.Run();
 
