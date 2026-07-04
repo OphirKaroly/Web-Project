@@ -61,3 +61,20 @@ input {
     font-size:larger;
     margin:0;
 }
+
+.flyer {
+    display:flex;
+    align-items:center;
+    gap:5px;
+    justify-content:flex-start;
+}
+
+.sym {
+    height:80px;
+    width:80px;
+}
+
+.multiplier {
+    margin:0;
+    transform: scale(1.6);
+}

@@ -8,8 +8,10 @@
 </head>
 <body id="body">
 
-    <img src="Cards/realchip.png" style="position:absolute; top:20px; right:20px; height:71px; width:71px;">
-    <h1 id="balance" style="position:absolute; top:17px; right:110px;"></h1>
+    <div style="display: flex; gap: 10px; align-items:center; position: absolute; top: 0; right: 20px;">
+        <h1 id="balance" style="font-size:50px;"></h1>
+        <img src="Cards/chip.png" style="height:60px; width:60px;">
+    </div>
 
     <h1 id="var" class="counter"> 0 </h1>
     <div>
@@ -17,7 +19,8 @@
         <button type="button" onclick="Decrement()" style="font-size:400%;"> - </button>
     </div>
 
-    <a href="man.html"> <h2> ??? </h2> </a>
+    <br><br><br>
+
     <a href="BlackJack.html"><h2> Black-Jack </h2></a>
     <a href="SlotMachine.html"><h2> Slot Machine </h2></a>
     <button type="button" onclick="SwitchMode()" style="font-size:150%"> Switch Mode</button>

@@ -1,11 +1,6 @@
 wwwroot\BlackJack.html
-wwwroot\Cards\backside2.png
-wwwroot\Cards\backside2.webp
 wwwroot\Cards\C1.png
 wwwroot\Cards\C10.png
-wwwroot\Cards\C11.png
-wwwroot\Cards\C12.png
-wwwroot\Cards\C13.png
 wwwroot\Cards\C2.png
 wwwroot\Cards\C3.png
 wwwroot\Cards\C4.png
@@ -15,12 +10,7 @@ wwwroot\Cards\C7.png
 wwwroot\Cards\C8.png
 wwwroot\Cards\C9.png
 wwwroot\Cards\Cards.png
-wwwroot\Cards\chip blue.png
-wwwroot\Cards\chip1-removebg-preview.png
-wwwroot\Cards\chip1.png
-wwwroot\Cards\chip2.jpg
-wwwroot\Cards\chip2.png
-wwwroot\Cards\chips.webp
+wwwroot\Cards\chip.png
 wwwroot\Cards\D1.png
 wwwroot\Cards\D10.png
 wwwroot\Cards\D11.png
@@ -50,7 +40,6 @@ wwwroot\Cards\H6.png
 wwwroot\Cards\H7.png
 wwwroot\Cards\H8.png
 wwwroot\Cards\H9.png
-wwwroot\Cards\realchip.png
 wwwroot\Cards\S1.png
 wwwroot\Cards\S10.png
 wwwroot\Cards\S11.png
@@ -64,22 +53,8 @@ wwwroot\Cards\S6.png
 wwwroot\Cards\S7.png
 wwwroot\Cards\S8.png
 wwwroot\Cards\S9.png
-wwwroot\Cards\Slot0.jpg
-wwwroot\Cards\Slot1.jpg
-wwwroot\Cards\Slot2.jpg
-wwwroot\Cards\Slot3.jpg
-wwwroot\Cards\Slot4.jpg
-wwwroot\Cards\Slot5-A.jpg
-wwwroot\Cards\Slot5-B.jpg
-wwwroot\Cards\Slot5-C.jpg
-wwwroot\Cards\Slot5.jpg
-wwwroot\Cards\Slot6.jpg
-wwwroot\Cards\Transition5-6.jpg
-wwwroot\Cards\Transition6-5.jpg
 wwwroot\desktop.ini
 wwwroot\Fonts\Pixelta.ttf
-wwwroot\Hit.mp3
-wwwroot\Hit2.mp3
 wwwroot\Images\Billy1.jpeg
 wwwroot\Images\Billy2.jpeg
 wwwroot\Images\Billy3.jpeg
@@ -101,9 +76,23 @@ wwwroot\Images\Stock Market V2.png
 wwwroot\Images\Stock Market V3.png
 wwwroot\Images\Stock Market V4.png
 wwwroot\index.html
-wwwroot\man.html
-wwwroot\script.js
-wwwroot\SlotMachine.html
-wwwroot\style.css
-wwwroot\table.html
 wwwroot\requirements.md
+wwwroot\SlotMachine.html
+wwwroot\Sounds\Hit.mp3
+wwwroot\Sounds\Hit2.mp3
+wwwroot\style.css
+wwwroot\Symbols\Slot0.jpg
+wwwroot\Symbols\Slot1 -.png
+wwwroot\Symbols\Slot1.jpg
+wwwroot\Symbols\Slot2 -.png
+wwwroot\Symbols\Slot2.jpg
+wwwroot\Symbols\Slot3 -.png
+wwwroot\Symbols\Slot3.jpg
+wwwroot\Symbols\Slot4 -.png
+wwwroot\Symbols\Slot4.jpg
+wwwroot\Symbols\Slot5 -.png
+wwwroot\Symbols\Slot5.jpg
+wwwroot\Symbols\Slot6 -.png
+wwwroot\Symbols\Slot6.jpg
+wwwroot\table.html
+wwwroot\script.js

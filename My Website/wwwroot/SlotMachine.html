@@ -8,30 +8,109 @@
 
 <body class="casino">
 
-    <img src="Cards/realchip.png" style="position:absolute; top:20px; right:20px; height:71px; width:71px;">
-    <h1 id="balance" style="position:absolute; top:17px; right:110px;"></h1>
+    <div style="display: flex; gap: 10px; align-items:center; position: absolute; top: 0; right: 20px;">
+        <h1 id="balance" style="font-size:50px;"></h1>
+        <img src="Cards/chip.png" style="height:60px; width:60px;">
+    </div>
 
-    <br><br><br><br><br><br><br><br><br>
+    <div id="flyer" style="position:absolute; right:360px; bottom:40px;">
 
-    <div style="text-align:center;">
+        <div class="flyer">
+            <img class="sym" src="Symbols/Slot1 -.png">
+            <img class="sym" src="Symbols/Slot1 -.png">
 
-        <img id="slot1" height="126" weight="126" src="/Cards/Slot0.jpg">
-        <img id="slot2" height="126" weight="126" src="/Cards/Slot0.jpg">
-        <img id="slot3" height="126" weight="126" src="/Cards/Slot0.jpg">
+            <h1 class="multiplier">&nbsp;&nbsp;1.5 X</h1>
+        </div>
 
-        <br><br><br>
+        <div class="flyer">
+            <img class="sym" src="Symbols/Slot3 -.png">
+            <img class="sym" src="Symbols/Slot3 -.png">
 
-        <button onclick="SlotMachine()"> <h2>&nbsp; Run &nbsp;</h2> </button>
+            <h1 class="multiplier">&nbsp;&nbsp;2 X</h1>
+        </div>
+
+        <div class="flyer">
+            <img class="sym" src="Symbols/Slot1 -.png">
+            <img class="sym" src="Symbols/Slot1 -.png">
+            <img class="sym" src="Symbols/Slot1 -.png">
+
+            <h1 class="multiplier">&nbsp;&nbsp;3 X</h1>
+        </div>
+
+        <div class="flyer">
+            <img class="sym" src="Symbols/Slot3 -.png">
+            <img class="sym" src="Symbols/Slot3 -.png">
+            <img class="sym" src="Symbols/Slot3 -.png">
+
+            <h1 class="multiplier">&nbsp;&nbsp;8 X</h1>
+        </div>
+
+        <div class="flyer">
+            <img class="sym" src="Symbols/Slot4 -.png">
+            <img class="sym" src="Symbols/Slot4 -.png">
+            <img class="sym" src="Symbols/Slot4 -.png">
+
+            <h1 class="multiplier">&nbsp;&nbsp;15 X</h1>
+        </div>
+
+        <div class="flyer">
+            <img class="sym" src="Symbols/Slot2 -.png">
+            <img class="sym" src="Symbols/Slot2 -.png">
+            <img class="sym" src="Symbols/Slot2 -.png">
+
+            <h1 class="multiplier">&nbsp;&nbsp;25 X</h1>
+        </div>
+
+        <div class="flyer">
+            <img class="sym" src="Symbols/Slot5 -.png">
+            <img class="sym" src="Symbols/Slot5 -.png">
+            <img class="sym" src="Symbols/Slot5 -.png">
+
+            <h1 class="multiplier">&nbsp;&nbsp;&nbsp;200 X</h1>
+        </div>
+
+        <div class="flyer">
+            <img class="sym" src="Symbols/Slot6 -.png">
+            <img class="sym" src="Symbols/Slot6 -.png">
+            <img class="sym" src="Symbols/Slot6 -.png">
+
+            <h1 class="multiplier">&nbsp;&nbsp;&nbsp;500 X</h1>
+        </div>
 
     </div>
 
-    <br><br><br><br><br><br><br><br><br><br><br><br>
+    <div style="position:absolute; left:50%; top:27px; width:5px; height:90%; background-color:black;"></div>
 
-    <a href="index.html"> <h2> Home Page </h2> </a>
+    <div style="position:absolute; left:160px; top:90px;">
+
+        <img id="slot1" height="126" weight="126" src="/Symbols/Slot0.jpg">
+        <img id="slot2" height="126" weight="126" src="/Symbols/Slot0.jpg">
+        <img id="slot3" height="126" weight="126" src="/Symbols/Slot0.jpg">
+
+        <br><br><br>
+
+        <div style="display: flex; gap: 10px; align-items:center;">
+            <button onclick="SlotMachine()"> <h2>&nbsp;Bet &nbsp;</h2> </button>
+            <h1 id="bet" style="font-size:50px;"> 50 </h1>
+            <img src="Cards/chip.png" style="height:60px; width:60px;">
+        </div>
+
+        <br><br>
+
+        <h1 id="msg">  </h1>
+
+    </div>
+
+        
+
+        <a href="index.html"> <h2 style="position:absolute; bottom:10px; left:10px;"> Home Page </h2> </a>
 
 
-    <script src="/script.js"></script>
-    <script>Balance();</script>
+        <script src="/script.js"></script>
+        <script>
+            Balance();
+            InitBet();
+        </script>
 
 </body>
 

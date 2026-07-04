@@ -9,8 +9,8 @@ const Decks = [];
 let Flag;
 
 let audio = document.createElement("audio");
-let Re4 = "Hit.mp3";
-let Re3 = "Hit2.mp3";
+let Re4 = "/Sounds/Hit.mp3";
+let Re3 = "/Sounds/Hit2.mp3";
 audio.src = Re4;
 
 let bet = 25;
@@ -31,10 +31,12 @@ function SwitchMode() {
     if (!isDark) {
         body.style.backgroundColor = "black";
         document.getElementById("var").style.color = "White";
+        document.getElementById("balance").style.color = "White";
         isDark = true;
     } else {
-        body.style.backgroundColor = "Gainsboro";
+        body.style.backgroundColor = "white";
         document.getElementById("var").style.color = "Red";
+        document.getElementById("balance").style.color = "Black";
         isDark = false;
     }
 }
@@ -309,7 +311,7 @@ async function Start() {
     Hidden = "/cards/" + data.house + data.cardValue + ".png";
     Decks[0].Add(new Card(data.cardValue, data.house, document.getElementById("c1")));
 
-    Decks[0].GetCard(0).rep.src = "/cards/backside2.png";
+    Decks[0].GetCard(0).rep.src = "/cards/Deck1.png";
 
     for (let i = 2; i <= 4; i++) {
         res = await fetch('/api/top');
@@ -524,49 +526,76 @@ async function SlotMachine() {
     await fetch('/api/setman');
     console.log("SetMan");
 
-    if (!(await DecrementBalance(50))) {
+    InitBet();
+    document.getElementById("bet").innerText = bet;
+    if (!(await DecrementBalance(bet))) {
         return;
     }
 
-    document.getElementById("slot1").src = "/Cards/Slot0.jpg";
-    document.getElementById("slot2").src = "/Cards/Slot0.jpg";
-    document.getElementById("slot3").src = "/Cards/Slot0.jpg";
-
-    await new Promise(resolve => setTimeout(resolve, 600));
+    const arr = [];
 
     for (let i = 1; i <= 3; i++) {
-
-        await SlotMachineHelper(i);
-        await new Promise(resolve => setTimeout(resolve, 600));
+        document.getElementById("slot" + i).src = "/Symbols/Slot0.jpg";
+        arr.push(SymDeterminer());
     }
+
+    document.getElementById("msg").innerText = "";
+
+    console.log(arr);
+    const multiplier = Multiplier(arr);
+
+    for (let i = 0; i < 3; i++) {
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        SlotMachineHelper(arr[i], i + 1);
+        
+    }
+
+    for (let i = 0; i < 3; i++) {
+        await new Promise(resolve => Flag = resolve);
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    if (multiplier == 0) {
+        document.getElementById("msg").innerText = "Nothing!";
+    }
+
+    else {
+        document.getElementById("msg").innerText = multiplier + " X !";
+        IncrementBalance(bet * multiplier);
+    }
+
+    
+
+    
 }
 
-async function SlotMachineHelper(k) {
+async function SlotMachineHelper(sym, id) {
 
-    let sym = SymDeterminer();
-    let slot = document.getElementById("slot" + k);
+    const slot = document.getElementById("slot" + id);
+    let curr = RandomSym();
+    slot.src = "/Symbols/Slot" + curr + ".jpg";
 
-    slot.src = "/Cards/Slot" + sym + ".jpg";
+    for (let i = 0; i < 7 || curr != sym; i++) { 
 
-    for (let i = 0; i < 7; i++) {
-        await new Promise(resolve => setTimeout(resolve, 300));
+        await new Promise(resolve => setTimeout(resolve, 250));
 
-        let currSym = sym;
+        let next = RandomSym();
 
-        while (currSym == sym) {
-
-            currSym = SymDeterminer();
-            console.log(i + "-" + currSym)
+        while (next == curr) {
+            next = RandomSym();
         }
 
-        sym = currSym;
-        slot.src = "/Cards/Slot" + sym + ".jpg";
+        curr = next;
+        slot.src = "/Symbols/Slot" + curr + ".jpg";
     }
+
+    Flag();
 }
 function SymDeterminer() {
 
     let sym = Math.random();
-    console.log(sym);
 
     switch (true) {
 
@@ -574,23 +603,23 @@ function SymDeterminer() {
             return 6;
             break;
 
-        case sym >= 0.02 && sym < 0.12:
+        case sym >= 0.02 && sym < 0.07:
             return 5;
             break;
 
-        case sym >= 0.12 && sym < 0.3:
+        case sym >= 0.07 && sym < 0.2:
             return 4;
             break;
 
-        case sym >= 0.3 && sym < 0.5:
+        case sym >= 0.2 && sym < 0.5:
             return 3;
             break;
 
-        case sym >= 0.5 && sym < 0.7:
+        case sym >= 0.5 && sym < 0.6:
             return 2;
             break;
 
-        case sym >= 0.7 && sym < 1:
+        case sym >= 0.6 && sym < 1:
             return 1;
             break;
 
@@ -599,7 +628,110 @@ function SymDeterminer() {
             break;
     }
 }
+function RandomSym() {
 
+    let sym = Math.random();
+
+    switch (true) {
+
+        case sym <= 1/6:
+            return 1;
+            break;
+
+        case sym > 1/6 && sym <= 2/6:
+            return 2;
+            break;
+
+        case sym > 2/6 && sym <= 3/6:
+            return 3;
+            break;
+
+        case sym > 3/6 && sym <= 4/6:
+            return 4;
+            break;
+
+        case sym > 4/6 && sym <= 5/6:
+            return 5;
+            break;
+
+        case sym > 5 / 6 && sym <= 1:
+            return 6;
+            break;
+
+        default:
+            return 0;
+            break;
+    }
+}
+function Multiplier(arr) {
+
+    let a = 0;
+    let b = 0;
+    let c = 0;
+    let d = 0;
+    let e = 0;
+    let f = 0;
+
+    for (let i = 0; i < arr.length; i++) {
+        switch (arr[i]) {
+            case 1:
+                a++;
+                break;
+            case 2:
+                b++;
+                break;
+            case 3:
+                c++;
+                break;
+            case 4:
+                d++;
+                break;
+            case 5:
+                e++;
+                break;
+            case 6:
+                f++;
+                break;
+            default:
+                console.log("ERROR");
+                break;
+        }
+    }
+
+    if (a == 3) {
+        return 3;
+    }
+
+    if (a == 2) {
+        return 1.5;
+    }
+
+    if (c == 3) {
+        return 8;
+    }
+
+    if (c == 2) {
+        return 2;
+    }
+
+    if (b == 3) {
+        return 25;
+    }
+
+    if (d == 3) {
+        return 15;
+    }
+
+    if (e == 3) {
+        return 200;
+    }
+
+    if (f == 3) {
+        return 500;
+    }
+
+    return 0;
+}
 
 //Man
 
@@ -731,6 +863,18 @@ async function BetResult(result) {
     await new Promise(resolve => setTimeout(resolve, 1000));
     audio.play();
     IncrementBalance(payout);
+}
+
+async function InitBet() {
+    let res = await fetch('/api/balance');
+    let data = await res.json();
+
+    const temp = Math.floor(data / 20);
+
+    if (temp >= 50) {
+        bet = temp;
+        document.getElementById("bet").innerText = bet;
+    }
 }
 
 
