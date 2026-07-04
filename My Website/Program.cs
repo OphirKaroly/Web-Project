@@ -286,7 +286,7 @@ namespace My_Website
             int balance = 1000;
 
             Deck d = new Deck();
-            //d.Shuffle();
+            d.Shuffle();
 
             var builder = WebApplication.CreateBuilder(args);
             var app = builder.Build();
