@@ -7,6 +7,7 @@ let y = 1; // Image Index
 let Hidden;
 const Decks = [];
 let Flag;
+let markerid = 2;
 
 let audio = document.createElement("audio");
 let Re4 = "/Sounds/Hit.mp3";
@@ -39,22 +40,6 @@ function SwitchMode() {
         document.getElementById("balance").style.color = "Black";
         isDark = false;
     }
-}
-
-
-//Table
-function showSymbol() {
-    for (let i = 1; i <= 3; i++) {
-        document.getElementById("s" + i).innerText = String.fromCharCode(Number(document.getElementById("t" + i).value));
-    }
-}
-function switchImage() {
-    if (y == 4) {
-        y = 1;
-    } else {
-        y++;
-    }
-    document.getElementById("003").setAttribute("src", "/Images/Billy" + y + ".jpeg");
 }
 
 
@@ -145,6 +130,9 @@ async function Run() {
 
         console.log(deck);
 
+        const marker = document.getElementById("marker" + i);
+        marker.style.visibility = "visible";
+
         document.getElementById("Button1").onclick = () => HitNRun(deck, "msg");
         document.getElementById("Button2").onclick = () => Flag();
 
@@ -159,18 +147,34 @@ async function Run() {
         await new Promise(resolve => Flag = resolve);
         console.log("Flag!");
 
+        marker.style.visibility = "hidden";
+
         if (document.getElementById("Button3") != null) {
             document.getElementById("Button3").remove();
         }
     }
 
+    document.getElementById("marker1").style.visibility = "visible";
     await Stand(Decks[1]);
+    document.getElementById("marker1").style.visibility = "hidden";
+
 
     for (let i = 2; i < Decks.length; i++) {
-        await Result(Decks[i], "msg");
+
+        const marker = document.getElementById("marker" + i);
+        marker.style.visibility = "visible";
+
+        document.getElementById("msg").innerText = "";
+        document.getElementById("chip").style.visibility = "hidden";
+        document.getElementById("payout").innerText = "";
+        document.getElementById("msg").innerText = "";
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        await Result(Decks[i]);
+        marker.style.visibility = "hidden";
+        
     }
-
-
 }
 
 async function HitNRun(deck, id) {
@@ -235,9 +239,7 @@ async function Stand(deck) {
 
     audio.play();
 
-    Result(deck, "msg");
-
-
+    await Result(deck);
 }
 
 async function Restart() {
@@ -358,6 +360,11 @@ async function Start() {
 
 async function Split(deck) {
 
+
+    if (!(await DecrementBalance(bet))) {
+        return;
+    }
+
     audio.play();
 
     Decks.push(new Deck());
@@ -394,12 +401,19 @@ async function Split(deck) {
 
     document.getElementById("split").appendChild(span);
 
+    let marker = document.createElement("h1");
+    marker.style.visibility = "hidden";
+    marker.id = "marker" + markerid;
+    markerid++;
+    marker.innerText = "^";
+
     let div = document.createElement("div");
     div.style.gap = "5px";
 
     document.getElementById("split").appendChild(div);
     div.appendChild(p1);
     div.appendChild(p2);
+    div.appendChild(marker);
 
     if (deck.GetCard(0).GetValue() != deck.GetCard(1).GetValue()) {
         document.getElementById("Button3").remove();
@@ -429,7 +443,9 @@ function SwitchSound() {
     }
 }
 
-async function Result(deck, id) {
+async function Result(deck) {
+
+    console.log("result");
 
     await new Promise(resolve => setTimeout(resolve, 1000));
     let result;
@@ -487,23 +503,23 @@ async function Result(deck, id) {
 
 
     if (result == 0.5) {
-        document.getElementById(id).innerText = "DRAW!";
+        document.getElementById("msg").innerText = "DRAW!";
     }
 
     else {
         if (result == 1 || result == 2) {
-            document.getElementById(id).innerText = "WIN!";
+            document.getElementById("msg").innerText = "WIN!";
         }
 
         else {
-            document.getElementById(id).innerText = "LOSE!";
+            document.getElementById("msg").innerText = "LOSE!";
         }
 
         console.log(deck.GetSum());
         console.log(Decks[0].GetSum());
     }
 
-    BetResult(result);
+    await BetResult(result);
 }
 
 async function HardRestart() {
@@ -834,6 +850,11 @@ function Bet() {
 
 async function BetResult(result) {
 
+    console.log("BetResult");
+
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    audio.play();
+
     if (result == 0) {
         return;
     }
@@ -852,9 +873,8 @@ async function BetResult(result) {
          payout = Math.floor(bet / 2 * 3);
     }
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    audio.play();
-    document.getElementById("payout").innerHTML = "+ " + payout;
+    
+    document.getElementById("payout").innerText = "+ " + payout;
     document.getElementById("chip").style.visibility = "visible";
 
     await new Promise(resolve => setTimeout(resolve, 1000));

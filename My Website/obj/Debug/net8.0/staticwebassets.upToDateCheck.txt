@@ -1,6 +1,9 @@
 wwwroot\BlackJack.html
 wwwroot\Cards\C1.png
 wwwroot\Cards\C10.png
+wwwroot\Cards\C11.png
+wwwroot\Cards\C12.png
+wwwroot\Cards\C13.png
 wwwroot\Cards\C2.png
 wwwroot\Cards\C3.png
 wwwroot\Cards\C4.png

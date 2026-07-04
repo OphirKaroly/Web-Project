@@ -1,1 +1,10 @@
-C:\Users\User\source\repos\My Website\My Website\wwwroot\Cards\chip1.png
+C:\Users\User\source\repos\My Website\My Website\wwwroot\Images\black dude.png
+C:\Users\User\source\repos\My Website\My Website\wwwroot\Images\Casino Man red.jpg
+C:\Users\User\source\repos\My Website\My Website\wwwroot\Images\Casino Man.jpg
+C:\Users\User\source\repos\My Website\My Website\wwwroot\Images\Casino Man2.jpg
+C:\Users\User\source\repos\My Website\My Website\wwwroot\Images\Casino Man2.png
+C:\Users\User\source\repos\My Website\My Website\wwwroot\Images\Inspector.jpg
+C:\Users\User\source\repos\My Website\My Website\wwwroot\Images\Man.png
+C:\Users\User\source\repos\My Website\My Website\wwwroot\Images\Man2.png
+C:\Users\User\source\repos\My Website\My Website\wwwroot\Images\Slot5.jpg
+C:\Users\User\source\repos\My Website\My Website\wwwroot\table.html

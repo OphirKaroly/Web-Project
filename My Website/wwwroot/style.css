@@ -45,16 +45,6 @@ div {
     height: 107px;
 }
 
-.man {
-    position: absolute;
-    top: 297px;
-    left:775px;
-    width:600px;
-    height:402px;
-    image-rendering:pixelated;
-    visibility:hidden;
-}
-
 input {
     width: 70px;
     height:55px;
